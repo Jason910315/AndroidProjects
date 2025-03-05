@@ -28,12 +28,11 @@ class MainActivity : AppCompatActivity() {
 
         val cheerLeaders = listOf("Jason","Timmy","Yoyo")
         for(i in 0..2){
+            // 宣告一個 TextView 物件
             val textView = TextView(this)
             textView.text = cheerLeaders[i]
             linearLayout.addView(textView)
         }
-
-
 
         // Log 要放在 onCreate 函式裡，msg 為要輸出的訊息
         Log.v("Jason","Secret")
