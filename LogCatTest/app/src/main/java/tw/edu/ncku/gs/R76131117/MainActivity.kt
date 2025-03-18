@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        // 用 res 中的 id/main 的 LinearLayout
         val linearLayout = findViewById<LinearLayout>(R.id.main)
         // textView 要放進 layout 後使用者才能在螢幕上看見訊息
         // val textView = TextView(this)
