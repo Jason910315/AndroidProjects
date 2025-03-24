@@ -8,9 +8,9 @@ import java.net.URL
 class iTuneXMLParser {
     // 建立一個 XmlPullParserFactory 的實例，它負責決定並提供適當的 XML 解析器
     val factory = XmlPullParserFactory.newInstance()
-    // 請求工廠創建一個新的 XML 解析器 (XmlPullParser) 實例
+    // 請求工廠創建一個新的 XML 解析器 (XmlPullParser) 實例，他不會一次讀完整份文件，而是一個一個事件讀來
     val parser = factory.newPullParser()
-    // suspend 只能在背景使用，或是在 Coroutine 使用
+    // suspend 只能在背景使用，或是在 Coroutine 使用，因為其需要網路請求
     suspend fun parseURL(url : String) : List<SongItem>{
         val songList = mutableListOf<SongItem>()
         var title = ""
@@ -22,7 +22,7 @@ class iTuneXMLParser {
             parser.setInput(inputStream,null)
 
             // The next() reads the current event/element and move the cursor pointer to the next event
-
+            // parser.next()：每次讀進一個「事件」，像是開始標籤（START_TAG）、結束標籤（END_TAG）、文字內容（TEXT）等等
             var eventType = parser.next()
             // 當不是讀到檔案結尾就持續迴圈
             while(eventType != XmlPullParser.END_DOCUMENT){
