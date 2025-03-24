@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.collection.mutableIntListOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.example.ituneplayer.SongItem
 import com.example.ituneplayer.iTuneXMLParser
 import kotlinx.coroutines.Dispatchers
@@ -24,6 +25,7 @@ import kotlinx.coroutines.withContext
 class MainActivity : ListActivity() {
     val titles = mutableListOf<String>()
     // Adapter: 把資料（像 List、Array、Cursor 等）轉換成可以顯示在畫面上的 View 元件（像 ListView、RecyclerView）
+    // 此處 Adapter 是負責將 titles 的資料轉成 ListView 中的每一列(使用 simple_list_item_1 樣板)
     // by lazy: 延遲初始化，變數只有在第一次被使用時才會被建立出來，節省資源
     val adapter by lazy{
         ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,titles)
@@ -54,14 +56,14 @@ class MainActivity : ListActivity() {
                 // tiles 是綁定到 adapter 上，故會即時顯示在 ListView 上
                 titles.add(song.title)
             }
-            // 告訴 Adapter 資料已經更新了，請重畫畫面
+            // 告訴 Adapter 資料已經更新了，請重畫畫面，因為 UI 本身是不會自動知道你改了資料的
             adapter.notifyDataSetChanged()
         }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // enableEdgeToEdge()
-        // View 要改成重整頁面的 swiperefreshlayout
+        // 設定畫面使用 swiperefreshlayout.xml 作為版面
         setContentView(R.layout.swiperefreshlayout)
 //        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
 //            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -69,17 +71,26 @@ class MainActivity : ListActivity() {
 //            insets
 //        }
         // 將先前建立的 adapter 設定給 ListView，listAdapter 是 ListView 的屬性，用來顯示資料
-        // 找到 XML 裡設定的 swipeRefreshLayout
+        // 找到畫面上的 SwipeRefreshLayout，用來實作下拉更新功能
         val swipeRefreshLayout = findViewById<androidx.swiperefreshlayout.widget.SwipeRefreshLayout>(R.id.swipeRefreshLayout)
         listAdapter = adapter
-
-        swipeRefreshLayout.setOnRefreshListener {
-            swipeRefreshLayout.isRefreshing = true
-            titles.clear()
-            adapter.notifyDataSetChanged()
-            loadlist()
-            swipeRefreshLayout.isRefreshing = false
-        }
-        loadlist()
+        // 監聽 swipeRefreshLayout 元件，當使用者往下拉動時，執行程式
+//        swipeRefreshLayout.setOnRefreshListener {
+//            swipeRefreshLayout.isRefreshing = true  // 啟動刷新動畫，轉圈畫面
+//            titles.clear()
+//            adapter.notifyDataSetChanged()
+//            loadlist()                              // 執行 loadlist 抓取資料
+//            swipeRefreshLayout.isRefreshing = false // 結束刷新動畫
+//        }
+        swipeRefreshLayout.setOnRefreshListener(object : OnRefreshListener{
+            override fun onRefresh() {
+                swipeRefreshLayout.isRefreshing = true  // 啟動刷新動畫，轉圈畫面
+                titles.clear()
+                adapter.notifyDataSetChanged()
+                loadlist()                              // 執行 loadlist 抓取資料
+                swipeRefreshLayout.isRefreshing = false // 結束刷新動畫
+            }
+        })
+        loadlist()   // 啟動 Activity 時就呼叫 loadlist()，抓取第一次資料
     }
 }
