@@ -37,17 +37,8 @@ class MainActivity : ListActivity() {
         val toast = Toast.makeText(this,titles[position],Toast.LENGTH_LONG)
         toast.show()
     }
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        // enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-        // 將先前建立的 adapter 設定給 ListView，listAdapter 是 ListView 的屬性，用來顯示資料
-        listAdapter = adapter
+    // 重整頁面的函式，也等於原先爬取 XML 並顯示在 listView
+    fun loadlist(){
         // 讓 parserURL() 函式在背景執行，切換到 IO thread 執行
         // 注意 Dispatchers.Main 代表這段協程是在「主執行緒」啟動的（也就是可以操作 UI）
         GlobalScope.launch(Dispatchers.Main){
@@ -66,5 +57,29 @@ class MainActivity : ListActivity() {
             // 告訴 Adapter 資料已經更新了，請重畫畫面
             adapter.notifyDataSetChanged()
         }
+    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // enableEdgeToEdge()
+        // View 要改成重整頁面的 swiperefreshlayout
+        setContentView(R.layout.swiperefreshlayout)
+//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+//            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+//            insets
+//        }
+        // 將先前建立的 adapter 設定給 ListView，listAdapter 是 ListView 的屬性，用來顯示資料
+        // 找到 XML 裡設定的 swipeRefreshLayout
+        val swipeRefreshLayout = findViewById<androidx.swiperefreshlayout.widget.SwipeRefreshLayout>(R.id.swipeRefreshLayout)
+        listAdapter = adapter
+
+        swipeRefreshLayout.setOnRefreshListener {
+            swipeRefreshLayout.isRefreshing = true
+            titles.clear()
+            adapter.notifyDataSetChanged()
+            loadlist()
+            swipeRefreshLayout.isRefreshing = false
+        }
+        loadlist()
     }
 }
