@@ -33,7 +33,7 @@ class MainActivity : ListActivity() {
         // 呼叫父類別的原本邏輯，l: 被點擊的 listView，v: 被點擊的那一列，position: 被點擊項目的索引
         super.onListItemClick(l, v, position, id)
         Log.i("Jason:","User clicked:" + titles[position])
-        // 顯示一個短暫的提示訊息（Toast）在畫面上，Toast.LENGTH_LONG: 持續的時間，約3.5秒
+        // 顯示一個短暫的提示訊息（Toast）在畫面上，Toast.LENGTH_LONG: 持續的時間，大約3.5秒
         val toast = Toast.makeText(this,titles[position],Toast.LENGTH_LONG)
         toast.show()
     }
