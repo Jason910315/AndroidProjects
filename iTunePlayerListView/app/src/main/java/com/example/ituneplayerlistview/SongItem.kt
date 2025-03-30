@@ -1,5 +1,9 @@
 package com.example.ituneplayer
+
+import android.graphics.Bitmap
+
 // 存資料的 class，class 的建構子參數必須加上 val/var
-data class SongItem(val title : String = ""){  // Primary constructor
+// Primary constructor
+data class SongItem(val title : String = "", val cover : Bitmap? = null){
 
 }

@@ -1,5 +1,7 @@
 package com.example.ituneplayer
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.util.Log
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
@@ -14,6 +16,8 @@ class iTuneXMLParser {
     suspend fun parseURL(url : String) : List<SongItem>{
         val songList = mutableListOf<SongItem>()
         var title = ""
+        // 建立一個 Bitmap 物件
+        var cover : Bitmap? = null
         // Parse XML
         try{
             // openStream 是一個網路的 operation，Android 不允許其在前端做，需在 Coroutine 做(背景)
@@ -35,12 +39,20 @@ class iTuneXMLParser {
                             title = parser.nextText()
                             Log.i("title:",title)
                         }
+                        else if(parser.name == "im:image"){
+                            if(parser.getAttributeValue(null,"height") == "170"){
+                                val coverUrl = parser.nextText()
+                                Log.i("coverUrl:",coverUrl)
+                                val inputStream = URL(coverUrl).openStream()
+                                cover = BitmapFactory.decodeStream(inputStream)
+                            }
+                        }
                     }
                     // 當讀到結尾 tag 時
                     XmlPullParser.END_TAG -> {
                         // 讀到 entry 代表為一首歌的資料結尾
                         if(parser.name == "entry"){
-                            songList.add(SongItem(title))
+                            songList.add(SongItem(title , cover))
                         }
                     }
                 }
