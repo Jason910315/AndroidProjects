@@ -1,5 +1,7 @@
 package com.example.itunerecyclerview
 
-data class SongItem(val title : String = ""){
+import android.graphics.Bitmap
+
+data class SongItem(val title : String = "", val cover : Bitmap? = null){
 
 }
