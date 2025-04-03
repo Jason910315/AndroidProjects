@@ -83,7 +83,6 @@ class MainActivity : ListActivity(){
 //        }
         // 將先前建立的 adapter 設定給 ListView，listAdapter 是 ListView 的屬性，用來顯示資料
         // 找到畫面上的 SwipeRefreshLayout，用來實作下拉更新功能
-
         // 準備好的 adapter，綁定到 ListActivity 內建的 ListView 來顯示資料
         listAdapter = adapter
 
