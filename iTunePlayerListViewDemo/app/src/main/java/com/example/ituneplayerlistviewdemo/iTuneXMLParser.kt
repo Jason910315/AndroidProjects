@@ -1,4 +1,4 @@
-package com.example.ituneplayer
+package com.example.ituneplayerlistviewdemo
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -10,15 +10,12 @@ import java.net.URL
 class iTuneXMLParser {
     // 建立一個 XmlPullParserFactory 的實例，它負責決定並提供適當的 XML 解析器
     val factory = XmlPullParserFactory.newInstance()
-    // 請求工廠創建一個新的 XML 解析器 (XmlPullParser) 實例，他不會一次讀完整份文件，而是一個一個事件讀來
+    // 請求工廠創建一個新的 XML 解析器 (XmlPullParser) 實例，他不會一次讀完整份文件，而是一個一個事件讀進來
     val parser = factory.newPullParser()
     // suspend 只能在背景使用，或是在 Coroutine 使用，因為其需要網路請求
     suspend fun parseURL(url : String) : List<SongItem>{
         val songList = mutableListOf<SongItem>()
         var title = ""
-        // 建立一個 Bitmap 物件
-        var cover : Bitmap? = null
-        var m4aurl = ""
         // Parse XML
         try{
             // openStream 是一個網路的 operation，Android 不允許其在前端做，需在 Coroutine 做(背景)
@@ -40,26 +37,12 @@ class iTuneXMLParser {
                             title = parser.nextText()
                             Log.i("title:",title)
                         }
-                        else if(parser.name == "link"){
-                            if(parser.getAttributeValue(null,"type") == "audio/x-m4a"){
-                                m4aurl = parser.getAttributeValue(null,"href")
-                                Log.i("m4aUrl",m4aurl)
-                            }
-                        }
-                        else if(parser.name == "im:image"){
-                            if(parser.getAttributeValue(null,"height") == "170"){
-                                val coverUrl = parser.nextText()
-                                Log.i("coverUrl:",coverUrl)
-                                val inputStream = URL(coverUrl).openStream()
-                                cover = BitmapFactory.decodeStream(inputStream)
-                            }
-                        }
                     }
                     // 當讀到結尾 tag 時
                     XmlPullParser.END_TAG -> {
                         // 讀到 entry 代表為一首歌的資料結尾
                         if(parser.name == "entry"){
-                            songList.add(SongItem(title , cover, m4aurl))
+                            songList.add(SongItem(title))
                         }
                     }
                 }

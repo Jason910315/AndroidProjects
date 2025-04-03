@@ -7,8 +7,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ituneplayer.SongItem
-
-class iTuneRecyclerViewAdapter(data : List<SongItem>) : RecyclerView.Adapter<iTuneRecyclerViewAdapter.ViewHolder>(){
+// 11.
+class iTuneRecyclerViewAdapter(data : List<SongItem>,val listener : RecyclerViewClickListener?=null) : RecyclerView.Adapter<iTuneRecyclerViewAdapter.ViewHolder>(){
+    // 22.
+    interface RecyclerViewClickListener{
+        fun onClick(position : Int)
+    }
     var songs : List<SongItem> = data
         set(value){
             field = value
@@ -27,6 +31,10 @@ class iTuneRecyclerViewAdapter(data : List<SongItem>) : RecyclerView.Adapter<iTu
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.textView.text = songs.get(position).title
         holder.imageView.setImageBitmap(songs.get(position).cover)
+        // 33.
+        holder.view.setOnClickListener {
+            listener?.onClick(position)
+        }
     }
 
     override fun getItemCount(): Int {

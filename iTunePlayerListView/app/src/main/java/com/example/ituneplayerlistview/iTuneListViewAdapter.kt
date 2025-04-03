@@ -10,6 +10,7 @@ import com.example.ituneplayer.SongItem
 
 // 要使用 Adapter 物件要繼承 BaseAdapter
 class iTuneListViewAdapter : BaseAdapter(){
+
     var song = listOf<SongItem>()
         set(value){
             field = value
