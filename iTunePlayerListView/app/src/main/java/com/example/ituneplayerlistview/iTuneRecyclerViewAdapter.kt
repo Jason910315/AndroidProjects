@@ -8,7 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ituneplayer.SongItem
 // 11.
-class iTuneRecyclerViewAdapter(data : List<SongItem>,val listener : RecyclerViewClickListener?=null) : RecyclerView.Adapter<iTuneRecyclerViewAdapter.ViewHolder>(){
+class iTuneRecyclerViewAdapter(data : List<SongItem>,val listener : RecyclerViewClickListener?=null)
+    : RecyclerView.Adapter<iTuneRecyclerViewAdapter.ViewHolder>(){
     // 22.
     interface RecyclerViewClickListener{
         fun onClick(position : Int)
@@ -18,6 +19,7 @@ class iTuneRecyclerViewAdapter(data : List<SongItem>,val listener : RecyclerView
             field = value
             notifyDataSetChanged()
         }
+
     class ViewHolder(val view : View) : RecyclerView.ViewHolder(view){
         val textView = view.findViewById<TextView>(R.id.textView)
         val imageView = view.findViewById<ImageView>(R.id.imageView)

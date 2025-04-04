@@ -7,35 +7,31 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class MainActivity : ListActivity() {
+// 現在使用 RecyclerView，原先使用 ListView
+class MainActivity : AppCompatActivity() {
     val titles = mutableListOf<String>()
 
     val adapter by lazy {
-        iTuneListViewAdapter()
+        // 使用 ListViewAdapter
+        // iTuneListViewAdapter()
+        // 改使用 RecyclerViewAdapter
+        iTuneRecyclerViewAdapter(listOf<SongItem>())
     }
     val swipeRefreshLayout by lazy {
         findViewById<androidx.swiperefreshlayout.widget.SwipeRefreshLayout>(R.id.swipeRefreshLayout)
     }
-    // 覆寫 onListItemClick 函式，製作 ListItem 被點擊後的事件
-    override fun onListItemClick(l: ListView?, v: View?, position: Int, id: Long) {
-        // 呼叫父類別的原本邏輯，l: 被點擊的 listView，v: 被點擊的那一列，position: 被點擊項目的索引
-        super.onListItemClick(l, v, position, id)
-        val title = adapter.songs[position].title
-        Log.i("Jason:","User clicked:" + title)
-        // 顯示一個短暫的提示訊息（Toast）在畫面上，Toast.LENGTH_LONG: 持續的時間，大約3.5秒
-        val toast = Toast.makeText(this,title, Toast.LENGTH_LONG)
-        toast.show()
-    }
-    fun loadlist(){
 
+    fun loadlist(){
         GlobalScope.launch(Dispatchers.Main) {
             var songs = listOf<SongItem>()
             withContext(Dispatchers.IO){
@@ -55,7 +51,9 @@ class MainActivity : ListActivity() {
 //            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
 //            insets
 //        }
-        listAdapter = adapter
+        // listAdapter = adapter  // 此處使用 ListActivity 需要指派
+        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+        recyclerView.adapter = adapter
         swipeRefreshLayout.setOnRefreshListener(object : OnRefreshListener{
             override fun onRefresh() {
                 swipeRefreshLayout.isRefreshing = true  // 啟動刷新動畫，轉圈畫面
