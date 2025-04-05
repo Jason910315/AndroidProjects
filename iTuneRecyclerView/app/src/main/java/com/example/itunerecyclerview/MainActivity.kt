@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity(),iTuneRecyclerViewAdapter.RecyclerViewCl
         intent.putExtra("title",song.title)
         intent.putExtra("cover",song.cover)
         intent.putExtra("url",song.url)
-        // 跳轉頁面
+        // 執行跳轉頁面
         startActivity(intent)
     }
 }
