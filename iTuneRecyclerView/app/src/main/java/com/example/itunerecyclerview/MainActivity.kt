@@ -1,6 +1,7 @@
 package com.example.itunerecyclerview
 
 import android.app.ListActivity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -18,14 +19,14 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 // 現在使用 RecyclerView，原先使用 ListView
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),iTuneRecyclerViewAdapter.RecyclerViewClickListener {
     val titles = mutableListOf<String>()
 
     val adapter by lazy {
         // 使用 ListViewAdapter
         // iTuneListViewAdapter()
         // 改使用 RecyclerViewAdapter
-        iTuneRecyclerViewAdapter(listOf<SongItem>())
+        iTuneRecyclerViewAdapter(listOf<SongItem>(),this)
     }
     val swipeRefreshLayout by lazy {
         findViewById<androidx.swiperefreshlayout.widget.SwipeRefreshLayout>(R.id.swipeRefreshLayout)
@@ -65,5 +66,20 @@ class MainActivity : AppCompatActivity() {
             }
         })
         loadlist()
+    }
+
+    override fun onClick(position: Int) {
+        Log.i("click:",adapter.songs.get(position).title)
+        Toast.makeText(this,adapter.songs.get(position).title,Toast.LENGTH_LONG).show()
+        // 建立一個 intent，表示要從現在的頁面(MainActivity)跳轉到下個頁面(PreviewActivity)
+        // 使用顯式 Intent，明確指名要跳轉的 Activity
+        val intent = Intent(this,PreviewActivity::class.java)
+        val song = adapter.songs.get(position)
+        // 使用 Intent.putExtra(key, value) 傳送資料給 PreviewActivity
+        intent.putExtra("title",song.title)
+        intent.putExtra("cover",song.cover)
+        intent.putExtra("url",song.url)
+        // 跳轉頁面
+        startActivity(intent)
     }
 }
