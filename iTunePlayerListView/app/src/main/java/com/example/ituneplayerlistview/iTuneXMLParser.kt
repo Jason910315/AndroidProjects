@@ -3,6 +3,7 @@ package com.example.ituneplayer
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
+import com.example.ituneplayerlistview.SongItem
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import java.net.URL

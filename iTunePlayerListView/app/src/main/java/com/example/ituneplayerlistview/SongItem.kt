@@ -1,4 +1,4 @@
-package com.example.ituneplayer
+package com.example.ituneplayerlistview
 
 import android.graphics.Bitmap
 

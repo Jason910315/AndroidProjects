@@ -1,47 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".PreviewActivity">
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="title" type="String" />
+        <variable
+            name="cover" type="android.graphics.Bitmap" />
+    </data>
+    <LinearLayout
+        android:id="@+id/main"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".PreviewActivity">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        app:contentPadding="16dp"
-        app:cardElevation="5dp"
-        app:cardCornerRadius="16dp">
-
-        <LinearLayout
-            android:orientation="vertical"
+        <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:contentPadding="16dp"
+            app:cardElevation="5dp"
+            app:cardCornerRadius="16dp">
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:minHeight="150dp"
-                android:minWidth="150dp"
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/textView"
-                android:textSize="24sp"
-                android:padding="15dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:minHeight="150dp"
+                    android:minWidth="150dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:imageBitmap="@{cover}"/>
 
-    </androidx.cardview.widget.CardView>
-    <Button
-        android:id="@+id/playerButton"
-        android:layout_marginTop="16dp"
-        android:text="Play"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-</LinearLayout>
+                <TextView
+                    android:id="@+id/textView"
+                    android:textSize="24sp"
+                    android:padding="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{title}"/>
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+        <Button
+            android:id="@+id/playerButton"
+            android:layout_marginTop="16dp"
+            android:text="Play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</layout>

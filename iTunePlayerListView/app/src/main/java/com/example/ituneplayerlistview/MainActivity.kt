@@ -16,10 +16,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.collection.mutableIntListOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
-import com.example.ituneplayer.SongItem
+import com.example.ituneplayerlistview.SongItem
 import com.example.ituneplayer.iTuneXMLParser
+import com.example.ituneplayerlistview.databinding.SwiperefreshlayoutBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -38,7 +40,11 @@ class MainActivity : AppCompatActivity(), iTuneRecyclerViewAdapter.RecyclerViewC
         iTuneRecyclerViewAdapter(listOf<SongItem>(),this)
     }
     val swipeRefreshLayout by lazy{
-        findViewById<androidx.swiperefreshlayout.widget.SwipeRefreshLayout>(R.id.swipeRefreshLayout)
+        binding.swipeRefreshLayout
+        //findViewById<androidx.swiperefreshlayout.widget.SwipeRefreshLayout>(R.id.swipeRefreshLayout)
+    }
+    val binding : SwiperefreshlayoutBinding by lazy{
+        DataBindingUtil.setContentView(this,R.layout.swiperefreshlayout)
     }
 
     // 覆寫 onListItemClick 函式，製作 ListItem 被點擊後的事件
@@ -76,7 +82,7 @@ class MainActivity : AppCompatActivity(), iTuneRecyclerViewAdapter.RecyclerViewC
         super.onCreate(savedInstanceState)
         // enableEdgeToEdge()
         // 設定畫面使用 swiperefreshlayout.xml 作為版面
-        setContentView(R.layout.swiperefreshlayout)
+        // setContentView(R.layout.swiperefreshlayout)
 //        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
 //            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
 //            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -86,7 +92,8 @@ class MainActivity : AppCompatActivity(), iTuneRecyclerViewAdapter.RecyclerViewC
         // 找到畫面上的 SwipeRefreshLayout，用來實作下拉更新功能
 
 //4.        listAdapter = adapter
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+        //val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+        val recyclerView = binding.recyclerView
         recyclerView.adapter = adapter
         // 監聽 swipeRefreshLayout 元件，當使用者往下拉動時，執行程式
 //        swipeRefreshLayout.setOnRefreshListener {

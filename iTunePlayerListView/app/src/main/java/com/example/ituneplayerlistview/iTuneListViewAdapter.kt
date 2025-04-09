@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
-import com.example.ituneplayer.SongItem
+import com.example.ituneplayerlistview.SongItem
 
 // 要使用 Adapter 物件要繼承 BaseAdapter
 class iTuneListViewAdapter : BaseAdapter(){

@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.ituneplayerlistview"
+    namespace = "com.example.r76131117_hw2"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.ituneplayerlistview"
+        applicationId = "com.example.r76131117_hw2"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
@@ -32,10 +32,6 @@ android {
     }
     kotlinOptions {
         jvmTarget = "11"
-    }
-    buildFeatures{
-        //noinspection DataBindingWithoutKapt
-        dataBinding = true
     }
 }
 
