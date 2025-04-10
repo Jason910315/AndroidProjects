@@ -18,6 +18,7 @@ import kotlinx.coroutines.withContext
 class MainActivity : AppCompatActivity() {
     val  title = mutableListOf<String>()
 
+    // 用 RecyclerView 當 Adapter
     val adapter by lazy{
         RecyclerViewAdapter(listOf<VideoItem>())
     }
@@ -26,17 +27,19 @@ class MainActivity : AppCompatActivity() {
     }
     fun loadlist(){
         GlobalScope.launch(Dispatchers.Main) {
-            var videos = listOf<VideoItem>()
+            var videos_list = listOf<VideoItem>()
             withContext(Dispatchers.IO){
-                videos = XMLParser().parserURL("https://www.youtube.com/feeds/videos.xml?channel_id=UCupvZG-5ko_eiXAupbDfxWw")
+                videos_list = XMLParser().parserURL("https://www.youtube.com/feeds/videos.xml?channel_id=UCupvZG-5ko_eiXAupbDfxWw")
             }
-            adapter.videos = videos
+            // 將爬取到的 videos_list 指派給 adapter 裡定義的 videos
+            adapter.videos = videos_list
             adapter.notifyDataSetChanged()
         }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // enableEdgeToEdge()
+        // 使用 swipeRefreshLayout 做為主頁面樣板
         setContentView(R.layout.swiperefreshlayout)
 //        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
 //            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -48,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         swipeRefreshLayout.setOnRefreshListener(object : OnRefreshListener {
             override fun onRefresh() {
                 swipeRefreshLayout.isRefreshing = true
+                // 刷新頁面時(swipe)，需清空 adapter 裡的資料，重新指派資料
                 adapter.videos = listOf<VideoItem>()
                 loadlist()
                 Log.i("refresh:","true")

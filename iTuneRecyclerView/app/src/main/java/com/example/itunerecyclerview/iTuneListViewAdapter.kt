@@ -38,7 +38,7 @@ class iTuneListViewAdapter() : BaseAdapter(){
         // 建立一個 LayoutInflater，用來把 XML layout 轉成實際的 View。
         // context: 代表目前程式所處的環境（Activity、App等）
         var inflater = LayoutInflater.from(parent!!.context)
-        // 將 itune_list_item.xml 轉換成一個 View 物件，代表這一列的畫面長相
+        // 將 itune_list_item.xml 轉換成一個 View 物件，代表這一行的畫面長相
         // 代表 iTuneListViewAdapter 會使用 itune_list_item 這個樣板來顯示每一列的 View
         val itemView = inflater.inflate(R.layout.itune_list_item,null)
 

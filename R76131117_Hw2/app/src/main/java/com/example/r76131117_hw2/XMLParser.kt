@@ -30,11 +30,14 @@ class XMLParser {
                             // 印出該部影片的 videoID
                             Log.i("videoID:",videoID)
                         }
+                        // 當爬取到 title
                         if(parser.name == "title" && parser.depth == 3){
                             title = parser.nextText()
                             Log.i("title:",title)
                         }
+                        // 當爬取到 media:thumbnail，代表此新聞的圖片
                         if(parser.name == "media:thumbnail"){
+                            // 取得此標籤的 url 屬性值
                             val coverUrl = parser.getAttributeValue(null,"url")
                             Log.i("coverUrl:",coverUrl)
                             val inputStream = URL(coverUrl).openStream()
@@ -43,6 +46,7 @@ class XMLParser {
                     }
                     XmlPullParser.END_TAG -> {
                         if(parser.name == "entry"){
+                            // 將爬取到的 title、cover 加進 videoList 並 return
                             videoList.add(VideoItem(title,cover))
                         }
                     }
