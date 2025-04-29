@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/iTuneListFragment">
+
+    <fragment
+        android:id="@+id/iTuneListFragment"
+        android:name="com.example.ituneplayerlistview.iTuneListFragment"
+        android:label="iTuneListFragment" >
+        <action
+            android:id="@+id/action_iTuneListFragment_to_iTunePreviewFragment"
+            app:destination="@id/iTunePreviewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/iTunePreviewFragment"
+        android:name="com.example.ituneplayerlistview.iTunePreviewFragment"
+        android:label="iTunePreviewFragment" />
+    <argument
+        android:name="title"
+        app:argType="string" />
+</navigation>

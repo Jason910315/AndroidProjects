@@ -1,32 +1,12 @@
-package com.example.ituneplayerlistview
+package com.example.fragment_navigation
 
-import android.app.ListActivity
-import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.provider.Telephony.Mms.Intents
 import android.util.Log
-import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.LinearLayout
-import android.widget.ListView
-import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.collection.mutableIntListOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
-import com.example.ituneplayerlistview.SongItem
-import com.example.ituneplayerlistview.iTuneXMLParser
-import com.example.ituneplayerlistview.databinding.SwiperefreshlayoutBinding
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 // 現在使用 RecyclerView，原先使用 ListView
 class MainActivity : AppCompatActivity(),iTuneListFragment.OnSongSelectedListener {

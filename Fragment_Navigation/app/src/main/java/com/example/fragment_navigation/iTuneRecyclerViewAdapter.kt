@@ -1,4 +1,4 @@
-package com.example.ituneplayerlistview
+package com.example.fragment_navigation
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.ituneplayerlistview.SongItem
-import com.example.ituneplayerlistview.databinding.ItuneListItemBinding
+import com.example.fragment_navigation.SongItem
+import com.example.fragment_navigation.databinding.ItuneListItemBinding
 
 class iTuneRecyclerViewAdapter(data : List<SongItem>,val listener : RecyclerViewClickListener?=null) :
     RecyclerView.Adapter<iTuneRecyclerViewAdapter.ViewHolder>(){

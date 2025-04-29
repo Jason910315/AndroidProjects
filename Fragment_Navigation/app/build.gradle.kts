@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.ituneplayerlistview"
+    namespace = "com.example.fragment_navigation"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.ituneplayerlistview"
+        applicationId = "com.example.fragment_navigation"
         minSdk = 24
         targetSdk = 35
         versionCode = 1

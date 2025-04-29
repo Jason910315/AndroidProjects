@@ -1,9 +1,9 @@
-package com.example.ituneplayerlistview
+package com.example.fragment_navigation
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
-import com.example.ituneplayerlistview.SongItem
+import com.example.fragment_navigation.SongItem
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import java.net.URL

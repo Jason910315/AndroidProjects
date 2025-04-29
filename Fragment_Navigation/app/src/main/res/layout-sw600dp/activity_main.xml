@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- id="@+id/main",自己定義一個新的 ID 名稱（這邊是 main），讓 Java/Kotlin 程式碼中可以用 R.id.main 來找到這個元件。 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:orientation="horizontal"
+
+    android:divider="?android:attr/listDivider"
+    android:showDividers="middle"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <androidx.fragment.app.FragmentContainerView
+        android:name="com.example.fragment_navigation.iTuneListFragment"
+        android:id="@+id/listFragment"
+        tools:layout="@layout/fragment_itune_list"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
+    <androidx.fragment.app.FragmentContainerView
+        android:name="com.example.fragment_navigation.iTunePreviewFragment"
+        android:id="@+id/previewFragment"
+        tools:layout="@layout/fragment_itune_preview"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"/>
+
+
+</LinearLayout>

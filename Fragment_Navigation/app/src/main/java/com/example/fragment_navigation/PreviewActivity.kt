@@ -1,4 +1,4 @@
-package com.example.ituneplayerlistview
+package com.example.fragment_navigation
 
 import android.content.Intent
 import android.graphics.Bitmap
@@ -19,7 +19,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableField
-import com.example.ituneplayerlistview.databinding.ActivityPreviewBinding
+import com.example.fragment_navigation.databinding.ActivityPreviewBinding
 
 // 從 MainActvity 跳轉到此頁面
 // MediaCOntroller: Android 提供的 UI 控制元件，能夠控制影片或音樂播放，例如播放/暫停按鈕、時間軸。
