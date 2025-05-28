@@ -15,7 +15,17 @@
     <fragment
         android:id="@+id/iTunePreviewFragment"
         android:name="com.example.ituneplayerlistview.iTunePreviewFragment"
-        android:label="iTunePreviewFragment" />
+        android:label="iTunePreviewFragment" >
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="cover"
+            app:argType="android.graphics.Bitmap" />
+        <argument
+            android:name="url"
+            app:argType="string" />
+    </fragment>
     <argument
         android:name="title"
         app:argType="string" />

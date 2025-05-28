@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
-            name="songs"
-            type="com.example.fragment_navigation.SongItem" />
+            name="videos"
+            type="com.example.fragment_navigation.VideoItem" />
     </data>
     <!-- 讓 RecyclerView 的 ViewHolder 模式知道每一個 item（也就是清單中的一列）要顯示什麼 -->
     <androidx.cardview.widget.CardView
@@ -29,7 +29,7 @@
                 android:adjustViewBounds="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:imageBitmap="@{songs.cover}"/>
+                android:imageBitmap="@{videos.cover}"/>
             <TextView
                 android:id="@+id/textView"
                 android:paddingLeft="8dp"
@@ -37,7 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:text="@{songs.title}"/>
+                android:text="@{videos.title}"/>
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

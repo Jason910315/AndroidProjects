@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.fragment_navigation.SongItem
 import com.example.fragment_navigation.databinding.ItuneListItemBinding
 
-class iTuneRecyclerViewAdapter(data : List<SongItem>,val listener : RecyclerViewClickListener?=null) :
+class iTuneRecyclerViewAdapter(data : List<VideoItem>,val listener : RecyclerViewClickListener?=null) :
     RecyclerView.Adapter<iTuneRecyclerViewAdapter.ViewHolder>(){
     // 外部的 Activity（或 Fragment）只要實作這個介面，就能接收到點擊通知
     // Adapter 不需要知道點擊後做什麼，把這件事交給外部 Activity 控制
@@ -17,13 +17,13 @@ class iTuneRecyclerViewAdapter(data : List<SongItem>,val listener : RecyclerView
         fun onClick(position : Int)
     }
     // 當 song 被重新指定新資料時，會更新內部變數 field，然後呼叫 notifyDataSetChanged() 通知畫面重新載入
-    var songs : List<SongItem> = data
+    var videos : List<VideoItem> = data
         set(value){
             field = value
             notifyDataSetChanged()
         }
     // 建立 ViewHolder 類別 讓其他函式使用
-    // 綁定到 itune_list_item.xml 的 layout。並回傳 View 的 root 供畫面操作裡面的元件。
+    // 此處用 databinding 綁定 layout 的變數
     class ViewHolder(val binding : ItuneListItemBinding) : RecyclerView.ViewHolder(binding.root){
 //        val textView = view.findViewById<TextView>(R.id.textView)
 //        val imageView = view.findViewById<ImageView>(R.id.imageView)
@@ -37,16 +37,16 @@ class iTuneRecyclerViewAdapter(data : List<SongItem>,val listener : RecyclerView
         return ViewHolder(binding)
     }
     // 每當 RecyclerView 準備要顯示一行資料時，會呼叫這個方法，如何將資料繫結到每行
-    override fun onBindViewHolder(holder: iTuneRecyclerViewAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // onCreateViewHolder 建立的 binding 來做資料繫結
         // songs 型別為 SongItem(val title : String = "", val cover : Bitmap? = null,val url : String = "")，繫結到整筆 songs 資料
-        holder.binding.songs = songs.get(position)
+        holder.binding.videos = videos.get(position)
         holder.binding.root.setOnClickListener {
             listener?.onClick(position)
         }
     }
 
     override fun getItemCount(): Int {
-        return songs.size
+        return videos.size
     }
 }

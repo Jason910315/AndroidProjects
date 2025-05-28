@@ -35,6 +35,7 @@ class iTuneRecyclerViewAdapter(data : List<SongItem>,val listener : RecyclerView
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) : ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         // parent: 是 RecyclerView 本體，表示這個 view 會被加進哪個容器; false: 表示先不加進 RecyclerView，等系統幫你處理
+        // 將 itune_list_item 這個 layout 的變數綁訂到此 RecyclerView
         val binding = ItuneListItemBinding.inflate(inflater,parent,false)
         return ViewHolder(binding)
     }

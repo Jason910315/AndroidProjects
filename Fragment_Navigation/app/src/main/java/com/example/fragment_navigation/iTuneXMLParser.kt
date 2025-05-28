@@ -12,45 +12,52 @@ class iTuneXMLParser {
     val factory = XmlPullParserFactory.newInstance()
     val parser = factory.newPullParser()
 
-    suspend fun parseURL(url : String) : List<SongItem>{
-
-        val songList = mutableListOf<SongItem>()
+    suspend fun parserURL(url : String) : List<VideoItem>{
+        val videoList = mutableListOf<VideoItem>()
         var title = ""
-        var cover : Bitmap? = null
-        var m4aurl = ""
+        var videoID = ""
+        var cover : Bitmap?=null
+        var videoUrl = ""
         try{
             val inputStream = URL(url).openStream()
             parser.setInput(inputStream,null)
+
             var eventType = parser.next()
             while(eventType != XmlPullParser.END_DOCUMENT){
                 when(eventType){
                     XmlPullParser.START_TAG -> {
+                        // 當爬取到 yt:videoId 的 tag 時
+                        if(parser.name == "yt:videoId" && parser.depth == 3){
+                            videoID = parser.nextText()
+                            // 印出該部影片的 videoID
+                            Log.i("videoID:",videoID)
+                        }
+                        // 當爬取到 title
                         if(parser.name == "title" && parser.depth == 3){
                             title = parser.nextText()
                             Log.i("title:",title)
                         }
-                        else if(parser.name == "link"){
-                            // 取得這個 <link> 標籤的 type 屬性值，若 type 屬性 = "audio/x-m4a
-                            if(parser.getAttributeValue(null,"type") == "audio/x-m4a"){
-                                // 取得這個 <link> 標籤的 href 屬性值
-                                m4aurl = parser.getAttributeValue(null,"href")
-                                Log.i("m4aurl",m4aurl)
+                        // 當爬取到 media:thumbnail，代表此新聞的圖片
+                        if(parser.name == "media:thumbnail"){
+                            // 取得此標籤的 url 屬性值
+                            val coverUrl = parser.getAttributeValue(null,"url")
+                            Log.i("coverUrl:",coverUrl)
+                            val inputStream = URL(coverUrl).openStream()
+                            cover = BitmapFactory.decodeStream(inputStream)
+                        }
+                        if (parser.name == "link") {
+                            val rel = parser.getAttributeValue(null, "rel")
+                            if (rel == "alternate") {
+                                videoUrl = parser.getAttributeValue(null, "href")
+                                Log.i("YouTube Link:", videoUrl)
+                                // 這裡你就可以把 videoUrl 存到你要的變數中（例如 model.link）
                             }
                         }
-                        else if(parser.name == "im:image"){
-                            if(parser.getAttributeValue(null,"height") == "170"){
-                                val coverUrl = parser.nextText()
-                                Log.i("coverUrl:",coverUrl)
-                                val inputStream = URL(coverUrl).openStream()
-                                cover = BitmapFactory.decodeStream(inputStream)
-                            }
-                        }
-
                     }
                     XmlPullParser.END_TAG -> {
                         if(parser.name == "entry"){
-                            // 將取出的三個屬性值包裝成 SongItem 物件並加入 songList
-                            songList.add(SongItem(title , cover, m4aurl))
+                            // 將爬取到的 title、cover 加進 videoList 並 return
+                            videoList.add(VideoItem(title,cover,videoUrl))
                         }
                     }
                 }
@@ -63,7 +70,7 @@ class iTuneXMLParser {
             val test = URL("https://www.google.com").readText()
             Log.i("NetworkTest", test)
         }
-        Log.i("list:",songList.toString())
-        return songList
+        Log.i("list:",videoList.toString())
+        return videoList
     }
 }

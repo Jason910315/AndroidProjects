@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.MediaController
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableField
+import androidx.navigation.fragment.navArgs
 import com.example.ituneplayerlistview.databinding.ActivityPreviewBinding
 import com.example.ituneplayerlistview.databinding.FragmentItunePreviewBinding
 
@@ -25,6 +26,15 @@ class iTunePreviewFragment : Fragment(), MediaController.MediaPlayerControl  {
     private var url: String? = null
     private var musicPlaying = false
     private var bufferPercentage = 0
+
+    val args : iTunePreviewFragmentArgs by navArgs()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        parentFragment?.let{
+            previewSong(args.title,args.cover,args.url,0)
+        }
+    }
 
     override fun onPause() {
         super.onPause()
